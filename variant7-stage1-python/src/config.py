@@ -100,7 +100,6 @@ def _validate_package_version(value: str) -> str:
     return value
 def _validate_repository_mode(value: str) -> str:
     mode = value.lower()
-
     if mode not in REPOSITORY_MODES:
         raise ConfigError(
             "repository.mode должен быть одним из значений: "
