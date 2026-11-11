@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 import configparser
 from dataclasses import dataclass
@@ -49,7 +48,6 @@ def _required(
     _ensure_section(parser, section)
     _ensure_option(parser, section, key)
     value = parser.get(section, key, fallback="").strip()
-
     if not value:
         raise ConfigError(
             f"параметр [{section}] {key} не должен быть пустым."
@@ -84,7 +82,6 @@ def _validate_coordinates(value: str) -> str:
             "groupId:artifactId, например com.example:demo-app."
         )
     group_id, artifact_id = parts
-
     for part in (group_id, artifact_id):
         _validate_coordinate_part(part)
     return COORDINATE_SEPARATOR.join(
