@@ -173,10 +173,8 @@ def _resolve_config_path(
     config_file: str | Path,
 ) -> Path:
     path = Path(config_file).expanduser()
-
     if not path.is_absolute():
         path = Path.cwd() / path
-
     return path.resolve()
 def _ensure_config_file(config_path: Path) -> None:
     if not config_path.exists():
@@ -201,26 +199,20 @@ def _read_parser(
         raise ConfigError(
             f"не удалось прочитать INI-файл: {exc}"
         ) from exc
-
     return parser
 def load_config(config_file: str | Path) -> AppConfig:
     config_path = _resolve_config_path(config_file)
     _ensure_config_file(config_path)
-
     parser = _read_parser(config_path)
-
     package_name = _validate_coordinates(
         _required(parser, PACKAGE_SECTION, "name")
     )
-
     package_version = _validate_package_version(
         _required(parser, PACKAGE_SECTION, "version")
     )
-
     repository, repository_mode, resolved_mode = (
         _resolve_repository(parser, config_path)
     )
-
     graph_image = _required(
         parser,
         VISUALIZATION_SECTION,
@@ -248,10 +240,8 @@ def render_config(config: AppConfig) -> str:
         ),
     )
     lines = ["Параметры запуска:"]
-
     lines.extend(
         f"{key}={value}"
         for key, value in values
     )
-
     return "\n".join(lines)
